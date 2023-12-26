@@ -22,7 +22,7 @@ jobs:
               id : hello
               run : echo "demo=This is output line" > $GITHUB_OUTPUT
             - name : repo Environment secrets
-              run : echo "'test' Environment secrets : ${{env.PASSWORD}} " 
+              run : echo "'test' Environment secrets  ${{env.PASSWORD}} " 
 
     output-env :
         runs-on : ubuntu-latest

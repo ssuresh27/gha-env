@@ -1,10 +1,17 @@
 name : Using Environment
-on : push
+on :
+    push:
+        branches:
+            - main
+            - dev
 env :
     DEMO_ENV : This is environment value
     DEMO_ENV1 : This is environment value
+    PASSWORD : ${{ secrets.PASS }}
 jobs:
     declare-env : 
+        #Using github repo envionment available for public repo
+        environment : test
         env :
             DEMO_JOBS_ENV : This is jobs environment value
         runs-on : ubuntu-latest
@@ -14,6 +21,8 @@ jobs:
             - name : using output
               id : hello
               run : echo "demo=This is output line" > $GITHUB_OUTPUT
+            - name : repo Environment secrets
+              run : echo "'test' Environment secrets : ${{env.PASSWORD}} " 
 
     output-env :
         runs-on : ubuntu-latest
@@ -24,4 +33,5 @@ jobs:
                 echo "Output :- ${{ needs.declare-env.outputs.output1}}"
                 echo "Environemnt value $DEMO_ENV1"
                 echo "Jobs Environemnt value ${{ env.DEMO_ENV }}"
+                echo "Secrets set in repo ${{ env.PASSWORD }}"
 

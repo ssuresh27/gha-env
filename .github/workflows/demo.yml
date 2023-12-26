@@ -4,6 +4,7 @@ on :
         branches:
             - main
             - dev
+#Dev branch workflow is skipped due to repo environment secrets protection
 env :
     DEMO_ENV : This is environment value
     DEMO_ENV1 : This is environment value

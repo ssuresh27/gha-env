@@ -1,0 +1,27 @@
+name : Using Environment
+on : push
+env :
+    DEMO_ENV : This is environment value
+    DEMO_ENV1 : This is environment value
+jobs:
+    declare-env : 
+        env :
+            DEMO_JOBS_ENV : This is jobs environment value
+        runs-on : ubuntu-latest
+        outputs:
+            output1 : ${{steps.hello.outputs.demo}}
+        steps:
+            - name : using output
+              id : hello
+              run : echo "demo=This is output line" > $GITHUB_OUTPUT
+
+    output-env :
+        runs-on : ubuntu-latest
+        needs: declare-env
+        steps:
+            - name : Output value
+              run : |
+                echo "Output :- ${{ needs.declare-env.outputs.output1}}"
+                echo "Environemnt value $DEMO_ENV1"
+                echo "Jobs Environemnt value ${{ env.DEMO_ENV }}"
+
